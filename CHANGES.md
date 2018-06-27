@@ -1,6 +1,59 @@
 Next version
 ----
+...
+
+- Fixed parsing JFR files under JDK 9/10
+
+0.10.1 - 2018 Jun 4
+----
+- Java 9/10 compatibility fixes
+
+0.10 - 2018 May 28
+----
+- Added contention monitoring option to `ttop` command
+- `jstack` thread dump text format is now accepted by analytic commands
+- Added 'flame' command producing flame chart in HTML format
+
+0.9.3 - 2018 Mar 31
+----
+- Few minor changes in heap parser
+
+0.9.2 - 2018 Feb 18
+----
+- Frame histogram can be sorted by terminal count (default sort is by occurance count)
+- Export of tabular MBean attributes to CSV
+- Fixed NPE in thread dump collector
+
+0.9.1 - 2018 Jan 9
+----
+- Fixed few issues with hprof heap parser
+
+0.9 - 2017 Dec 24
+----
+- Fixed undesired splitting of JMX call arguments by comma
+- Fixed time range filtering for `stcpy` command
+- Added `mprx` command, open JMX port for target process
+
+0.8.1 - 2017 Nov 12
+----
+- Added SYS cpu time summary to `ssa --thread-info` command
+- Few improvements for `dexp` command
+
+0.8 - 2017 Aug 6
+----
+- Fixed transitive dependencies issues for JFR and NPS parsers
+- Fixed HeapPath bug for single asterisk path
+
+0.7 - 2017 Jul 23
+----
+- Parsing stack traces from NetBeans / VisualVM profiler snapshot format
+- Added command to export tags/counter from dump file to CSV or ASCII table
+
+0.6 - 2017 Jun 4
+----
 - Avoid unnecessary memory allocation to initialize hashCode on `StackFrame` object
+- Unified input processing between SSA and STCPY (SSA got wildcard support, STCPY time range filtering and trace trimming)
+- Parsing stack traces from Java Flight Recorder files
 
 0.5.1 - 2017 Mar 19
 ---

@@ -85,7 +85,7 @@ public class StackSampleAnalyzerCmd implements CmdRef {
         @Parameter(names={"-nc", "--named-class"}, required = false, variableArity = true, description="May be used with some commands to define name stack trace classes\nUse <name>=<filter expression> notation")
         private List<String> namedClasses = new ArrayList<String>();
         
-        @Parameter(names={"-tz", "--time-zone"}, required = false, description="Time zone used for timestamps")
+        @Parameter(names={"-tz", "--time-zone"}, required = false, description="Time zone used for timestamps and time ranges")
         private String timeZone = "UTC";
 
         @Parameter(names={"-co", "--csv-output"}, required = false, description="Output data in CSV format")
@@ -265,6 +265,9 @@ public class StackSampleAnalyzerCmd implements CmdRef {
             @Parameter(names={"--histo"}, description="Print frame histogram")
             boolean run;
 
+            @Parameter(names={"--by-term"}, description="Sort frame histogram by terminal count")
+            boolean sortByTerm = false;
+
             @Override
             public boolean isSelected() {
                 return run;
@@ -287,6 +290,10 @@ public class StackSampleAnalyzerCmd implements CmdRef {
                         ++n;
                     }
                     
+                    if (sortByTerm) {
+			histo.setHistoOrder(StackHisto.BY_TERMINAL);
+                    }
+
                     if (n > 0) {
                         if (csvOutput) {
                             System.out.println(histo.formatHistoToCSV());
@@ -423,7 +430,7 @@ public class StackSampleAnalyzerCmd implements CmdRef {
                     }
                     
                     if (csvOutput) {
-                        System.out.println(tt.formatToCSV());
+                        System.out.println(TextTable.formatCsv(tt));
                     }
                     else {
                         System.out.println(tt.formatTextTableUnbordered(Integer.MAX_VALUE));
@@ -505,7 +512,7 @@ public class StackSampleAnalyzerCmd implements CmdRef {
                     
                     if (n > 0) {
                         if (csvOutput) {
-                            System.out.println(tt.formatToCSV());
+                            System.out.println(TextTable.formatCsv(tt));
                         }
                         else {
                             System.out.println(tt.formatTextTableUnbordered(80));
@@ -525,7 +532,7 @@ public class StackSampleAnalyzerCmd implements CmdRef {
                 if ("NAME".equals(si)) {
                     add("Name", COMMON.name());
                 }
-                if (si.startsWith("NAME") && si.indexOf('=') < 0) {
+                else if (si.startsWith("NAME") && si.indexOf('=') < 0) {
                     int n = Integer.valueOf(si.substring(4));
                     add("Name", COMMON.name(n));
                 }
@@ -540,6 +547,9 @@ public class StackSampleAnalyzerCmd implements CmdRef {
                 }
                 else if ("CPU".equals(si)) {
                     add("On CPU", COMMON.cpu(), new PercentFormater());
+                }
+                else if ("SYS".equals(si)) {
+                	add("System", COMMON.sysCpu(), new PercentFormater());
                 }
                 else if ("ALLOC".equals(si)) {
                     add("Alloc ", COMMON.alloc(), new MemRateFormater());
@@ -582,6 +592,7 @@ public class StackSampleAnalyzerCmd implements CmdRef {
                         "  TSMIN",
                         "  TSMAX",
                         "  CPU",
+                        "  SYS",
                         "  ALLOC",
                         "  NATIVE",
                         "  FREQ",

@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Alexey Ragozin
+ * Copyright 2017 Alexey Ragozin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.netbeans.lib.profiler.heap;
+package org.gridkit.jvmtool.cmd;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
-import org.junit.Before;
+import com.beust.jcommander.converters.IParameterSplitter;
 
-public class BaseHeapTest_WithFastHprofHeap extends BaseHeapTest {
+public class Unsplitter implements IParameterSplitter {
 
-    Heap heap;
-
-    @Before
-    public void initHeap() throws FileNotFoundException, IOException {
-        heap = new FastHprofHeap(HeapDumpProcuder.getHeapDump(), 0);
-    }
-
-    @Override
-    public Heap getHeap() {
-        return heap;
-    }
+	@Override
+	public List<String> split(String value) {
+		return Collections.singletonList(value);
+	}
 }

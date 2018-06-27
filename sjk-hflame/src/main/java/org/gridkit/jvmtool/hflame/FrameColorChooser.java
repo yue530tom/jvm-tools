@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Alexey Ragozin
+ * Copyright 2018 Alexey Ragozin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.netbeans.lib.profiler.heap;
+package org.gridkit.jvmtool.hflame;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+public interface FrameColorChooser {
 
-import org.junit.Before;
-
-public class BaseHeapTest_WithHprofHeap extends BaseHeapTest {
-
-    Heap heap;
-
-    @Before
-    public void initHeap() throws FileNotFoundException, IOException {
-        heap = HeapFactory.createHeap(HeapDumpProcuder.getHeapDump());
-    }
-
-    @Override
-    public Heap getHeap() {
-        return heap;
-    }
+	public int getFrameColor(String frame);
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 Alexey Ragozin
+ * Copyright 2018 Alexey Ragozin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.netbeans.lib.profiler.heap;
+package org.gridkit.jvmtool;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.management.MXBean;
 
-import org.junit.Before;
+@MXBean(true)
+public interface DummyMBean {
 
-public class BaseHeapTest_WithCompressedFastHprofHeap extends BaseHeapTest {
-
-    Heap heap;
-
-    @Before
-    public void initHeap() throws FileNotFoundException, IOException {
-        heap = HeapFactory.createFastHeap(HeapDumpProcuder.getCompressedHeapDump());
-    }
-
-    @Override
-    public Heap getHeap() {
-        return heap;
-    }
+	public void callSingleStringArg(String arg);
+	
+	public void callDoubleStringArg(String arg1, String arg2);
+	
+	public void callStringArrayArg(String[] args);
+	
 }
